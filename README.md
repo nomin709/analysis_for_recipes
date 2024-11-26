@@ -1,15 +1,21 @@
-# Introduction
+# Analysis For Recipes
 
-# Data Cleaning and Exploratory Data Analysis
+by Nomin Batjargal and An-Chi Lu
 
-# Assessment of Missingness
+## Introduction
 
-# Hypothesis Testing
+Question: What type of recipes have the lowest number of steps on average?
 
-# Framing a Prediction Problem
+## Data Cleaning and Exploratory Data Analysis
 
-# Baseline Model
+## Assessment of Missingness
 
-# Final Model
+## Hypothesis Testing
 
-# Fairness Analysis
+## Framing a Prediction Problem
+
+## Baseline Model
+
+## Final Model
+
+## Fairness Analysis
