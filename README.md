@@ -25,8 +25,11 @@ Question: What types of recipes tend to have lower number of steps (the least nu
 ## Hypothesis Testing
 
 **Null Hypothesis:** The average number of steps for breakfast recipes is equal to the average number of steps for lunch recipes
-**Alternative Hypothesis:** The average number of steps for breakfast recipes is different than the average number of steps for lunch recipes
+
+**Alternative Hypothesis:** The average number of steps for breakfast recipes is different than the average number of steps for lunch
+ recipes
 **Test Statistics:** Permutation testing using the absolute difference between the means of breakfast recipes and lunch recipes
+
 **Significance Level:** 0.01
 
 ## Framing a Prediction Problem
