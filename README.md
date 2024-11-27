@@ -4,8 +4,6 @@ by Nomin Batjargal and An-Chi Lu
 
 ## Introduction
 
-Question: What type of recipes have the lowest number of steps on average?
-
 ## Data Cleaning and Exploratory Data Analysis
 
 ## Assessment of Missingness
