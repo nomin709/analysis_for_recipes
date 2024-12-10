@@ -61,7 +61,9 @@ To explore **which types of recipes tend to have a lower number of steps**, we w
 
 ##### Clean DataFrame
 
-print(merged_df.head().to_markdown(index=False))
+```python
+print(counts[['Quarter', 'Count']].head().to_markdown(index=False))
+```
 
 #### Univariate Analysis
 
