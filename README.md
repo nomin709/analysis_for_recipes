@@ -59,11 +59,21 @@ To explore **which types of recipes tend to have a lower number of steps**, we w
 6. Convert the values in the 'recipe_id' column from float to integer.
 - We convert the values in the 'recipe_id' column for better representation. 
 
+7. Drop columns containing text data.
+- Since the analysis focuses on types of recipes and the number of steps, we drop columns containing text like 'steps,' 'description,' and 'review' to enhance the dataset's clarity.
+
 ##### Clean DataFrame
 
-```python
-print(counts[['Quarter', 'Count']].head().to_markdown(index=False))
-```
+<div style="max-height: 400px; overflow-y: scroll;">
+| name                                 |     id |   minutes |   contributor_id | submitted   | tags                                                                                                                                                                                                                        | nutrition                                    |   n_steps | ingredients                                                                                                                                                                    |   n_ingredients |   user_id |   recipe_id | date       |   rating |   rating_avg |
+|:-------------------------------------|-------:|----------:|-----------------:|:------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------|----------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------:|----------:|------------:|:-----------|---------:|-------------:|
+| 1 brownies in the world    best ever | 333281 |        40 |           985201 | 2008-10-27  | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'for-large-groups', 'desserts', 'lunch', 'snacks', 'cookies-and-brownies', 'chocolate', 'bar-cookies', 'brownies', 'number-of-servings'] | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]     |        10 | ['bittersweet chocolate', 'unsalted butter', 'eggs', 'granulated sugar', 'unsweetened cocoa powder', 'vanilla extract', 'brewed espresso', 'kosher salt', 'all-purpose flour'] |               9 |    386585 |      333281 | 2008-11-19 |        4 |            4 |
+| 1 in canada chocolate chip cookies   | 453467 |        45 |          1848091 | 2011-04-11  | ['60-minutes-or-less', 'time-to-make', 'cuisine', 'preparation', 'north-american', 'for-large-groups', 'canadian', 'british-columbian', 'number-of-servings']                                                               | [595.1, 46.0, 211.0, 22.0, 13.0, 51.0, 26.0] |        12 | ['white sugar', 'brown sugar', 'salt', 'margarine', 'eggs', 'vanilla', 'water', 'all-purpose flour', 'whole wheat flour', 'baking soda', 'chocolate chips']                    |              11 |    424680 |      453467 | 2012-01-26 |        5 |            5 |
+| 412 broccoli casserole               | 306168 |        40 |            50969 | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]    |         6 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']          |               9 |     29782 |      306168 | 2008-12-31 |        5 |            5 |
+| 412 broccoli casserole               | 306168 |        40 |            50969 | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]    |         6 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']          |               9 |   1196280 |      306168 | 2009-04-13 |        5 |            5 |
+| 412 broccoli casserole               | 306168 |        40 |            50969 | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]    |         6 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']          |               9 |    768828 |      306168 | 2013-08-02 |        5 |            5 |
+...
+</div>
 
 #### Univariate Analysis
 
@@ -78,9 +88,29 @@ We examined the distribution of n_steps and found no missing values in the colum
 
 #### Bivariate Analysis
 
-Embed at least one plotly plot that displays the relationship between two columns. Include a 1-2 sentence explanation about your plot, making sure to describe and interpret any trends present. (Your notebook will likely have more visualizations than your website, and that’s fine. Feel free to embed more than one bivariate visualization in your website if you’d like, but make sure that each embedded plot is accompanied by a description.)
+We examined the distribution of n_ingredients and found no missing values in the column. The plot shows that the number of ingredients mostly ranges from 0 to 30, with the majority falling within 40 steps.
+
+<iframe
+  src="assets/bivariatee.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 #### Interesting Aggregates
+
+| tags       |        1 |       2 |       3 |
+|:-----------|---------:|--------:|--------:|
+| american   |  18.8945 | 59.9345 | 40.8085 |
+| appetizers |  12.4509 | 41.2602 | 36.2605 |
+| breakfast  |  36.7671 | 18.0526 | 30.2157 |
+| brunch     | 100.421  | 10.2177 | 31.021  |
+| desserts   |  15.2672 | 20.0771 | 38.6757 |
+| european   |  46.2705 | 25.7961 | 37.1663 |
+| fruit      |  30.574  | 14.4203 | 25.3304 |
+| lunch      |  52.9877 | 17.5945 | 34.9934 |
+| salads     |  24.5385 | 17.5127 | 23.2074 |
+| vegetarian |  10.7028 | 23.1497 | 25.9033 |
 
 Embed at least one grouped table or pivot table in your website and explain its significance.
 
