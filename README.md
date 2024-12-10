@@ -103,7 +103,8 @@ We examined the distribution of n_ingredients and found no missing values in the
 | salads     |  24.5385 | 17.5127 | 23.2074 |
 | vegetarian |  10.7028 | 23.1497 | 25.9033 |
 
-Embed at least one grouped table or pivot table in your website and explain its significance.
+We aim to investigate which types of recipes tend to be more efficient by focusing on those with fewer steps. To do this, we set a threshold of steps to 3 or fewer, creating a query DataFrame of such recipes. Since each recipe can have multiple tags, we explode the tags column and count the frequency of each tag to identify the top 30 most common ones. Tags often describe characteristics of a recipe rather than its type, so we manually filtered the top 10 tags based on our judgment. Note that because recipes can have multiple tags, the resulting data contains repeated entries. However, our goal is to identify overall patterns.
+The pivot table above shows the mean preparation time (in minutes) for each number of steps, based on the top 10 tags we selected. From the table, we observe that the mean preparation time varies by recipe type and step count, likely influenced by outliers—individual recipes that require significantly more time. Despite these variations, many recipe types have a mean preparation time within 20 minutes. This insight provides a useful guide for college students seeking quick and efficient meal options.
 
 ## Assessment of Missingness
 
