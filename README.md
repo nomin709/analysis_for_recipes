@@ -67,7 +67,14 @@ print(counts[['Quarter', 'Count']].head().to_markdown(index=False))
 
 #### Univariate Analysis
 
-Embed at least one plotly plot you created in your notebook that displays the distribution of a single column (see Part 2: Report for instructions). Include a 1-2 sentence explanation about your plot, making sure to describe and interpret any trends present. (Your notebook will likely have more visualizations than your website, and that’s fine. Feel free to embed more than one univariate visualization in your website if you’d like, but make sure that each embedded plot is accompanied by a description.)
+We examined the distribution of n_steps and found no missing values in the column. The distribution appears to be right-skewed, with most recipes requiring fewer than 20 steps. Upon analyzing the statistics, we found that the mean number of steps is approximately 10, the median is 9, the maximum is 100, and the minimum is 1. 
+
+<iframe
+  src="assets/univariate.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 #### Bivariate Analysis
 
