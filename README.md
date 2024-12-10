@@ -41,6 +41,28 @@ To explore **which types of recipes tend to have a lower number of steps**, we w
 
 #### Data Cleaning
 
+1. Left merge the recipes and interactions datasets together.
+- The reviews and ratings in the interactions dataset will match the corresponding recipes in the recipes dataset. For recipes that do not appear in the interactions dataset, the reviews, ratings, and merged columns will be null. 
+
+2. Fill all ratings of 0 with np.nan in the merged dataset. 
+- Filling ratings of 0 with np.nan helps represent missing values, preventing potential bias in the analysis.
+
+3. Add a column containing the average rating for each recipe.
+- The average rating for each recipe provides a good indicator of the overall user reviews for that recipe.
+
+4. Convert the values in the 'tags' column from strings to lists.
+- Converting the values into lists allows us to identify and extract individual tags, which is useful for categorizing recipes by type.
+
+5. Convert the values in the 'user_id' column from float to integer.
+- We convert the values in the 'user_id' column for better representation.
+
+6. Convert the values in the 'recipe_id' column from float to integer.
+- We convert the values in the 'recipe_id' column for better representation. 
+
+##### Clean DataFrame
+
+
+
 Describe, in detail, the data cleaning steps you took and how they affected your analyses. The steps should be explained in reference to the data generating process. Show the head of your cleaned DataFrame 
 
 #### Univariate Analysis
