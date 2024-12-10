@@ -108,21 +108,58 @@ The pivot table above shows the mean preparation time (in minutes) for each numb
 
 ## Assessment of Missingness
 
+In the merged dataset, we observe that the columns with the most significant number of missing values are rating, rating_avg, and description.
+
 #### NMAR Analysis
 
-
-
-Recall, to determine whether data are likely NMAR, you must reason about the data generating process; you cannot conclude that data are likely NMAR solely by looking at your data. As such, there’s no code to write here (and hence, nothing to put in your notebook).
-
-State whether you believe there is a column in your dataset that is NMAR. Explain your reasoning and any additional data you might want to obtain that could explain the missingness (thereby making it MAR). Make sure to explicitly use the term “NMAR.”
+We believe the missingness in the description column is Not Missing at Random (NMAR). Since recipes are user-generated, it is likely optional for users to include a description when uploading their recipes to the platform. Some users may choose not to write a description because it takes time, while others may feel that the description does not add value in explaining the recipe's complexity. Additionally, some users might omit the description because the recipes are simple and self-explanatory, making a description unnecessary.
 
 #### Missingness Dependency
+
+We aim to investigate whether the missingness of the rating column depends on n_steps and minutes.
+
+***Rating Vs. Number of Steps***
+
+**Null Hypothesis:** The missingness of rating does not depend on n_steps.
+
+**Alternative Hypothesis:** The missingness of rating does depend on number of steps.
+
+**Test Statistics:** After comparing the distributions of the number of steps for cases where the rating is missing and not missing, we found that the distributions have similar centers but different shapes. As a result, we decided to use the K-S statistic as our test statistic.
+
+**Significance Level:** 0.05
+
+<iframe
+  src="assets/mar_dist.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+We can see that the distributions center roughly the same place but have different shapes.
+
+We performed a permutation test by shuffling n_steps 1,000 times and collecting the K-S statistic for each of the 1,000 simulated samples to obtain the distribution of simulated statistics.
+
+<iframe
+  src="assets/mar_emp.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+***summary***
 
 Present and interpret the results of your missingness permutation tests with respect to your data and question. Embed a plotly plot related to your missingness exploration; ideas include:
 
 • The distribution of column Y when column X is missing and the distribution of column Y when column X is not missing, as was done in Lecture 8.
 
 • The empirical distribution of the test statistic used in one of your permutation tests, along with the observed statistic.
+
+The absolute difference of mean in the '' of the distribution of the group with missing number of steps and the distribution of the group without missing number of steps.
+(diif in means, tvd, ks)
+Strategy: Always plot the two distributions you are comparing.
+- If the distributions have similar shapes but are centered in different places, use the difference in means (or absolute difference in means).
+- If your alternative hypothesis involves a "direction" (i.e. smoking weights were are on average than non-smoking weights), use the difference in means.
+- If the distributions have different shapes but roughly the same center, and your alternative hypothesis is simply that the two distributions are different, use the K-S statistic.
 
 missingness of: n_steps
 
