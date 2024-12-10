@@ -1,12 +1,41 @@
-# Analysis For Recipes
+# Exploring Recipe Types with Fewer Steps: An Analysis of Simplicity and Efficiency in Cooking
 
 by Nomin Batjargal and An-Chi Lu
 
 ## Introduction
 
-Question: What types of recipes tend to have lower number of steps (the least number of steps)?
+As we enter college, the pace of life becomes faster and more stressful compared to high school. Balancing assignments, projects, and deadlines often feels like a race against time. During exam weeks, some students might even skip meals to focus on studying. For many of us, cooking our own meals is a normal part of college life. However, during such time-constrained periods, we often look for ways to prepare food quickly while still satisfying our hunger.
+**This need for efficiency has led us to explore what types of recipes tend to require fewer steps, making them quicker to prepare.** To investigate, we are analyzing two datasets from Food.com, an online platform where users upload and share recipes. These datasets, scraped from the website, provide detailed information on recipe steps, allowing us to identify trends in simpler, time-saving meals.
 
-Provide an introduction to your dataset, and clearly state the one question your project is centered around. Why should readers of your website care about the dataset and your question specifically? Report the number of rows in the dataset, the names of the columns that are relevant to your question, and descriptions of those relevant columns.
+The first dataset, recipes, contains 83,782 rows and 12 columns. Below is a description of each column in the dataset: 
+
+| Column   | Description    |
+|-------------|-------------|
+| name | Recipe name|
+| id | Recipe ID | 
+| minutes | Minutes to prepare recipe |
+| contributor_id | User ID who submitted this recipe | 
+| submitted | Date recipe was submitted |
+| tags | Food.com tags for recipe | 
+| nutrition | Nutrition information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)]; PDV stands for “percentage of daily value” |
+| n_steps | Number of steps in recipe | 
+| steps | Text for recipe steps, in order |
+| description | User-provided description | 
+| ingredients | Recipe ingredients |
+| n_ingredients | Number of ingredients in recipe | 
+
+
+The second dataset, interactions, consists of 731,927 rows and 5 columns. This dataset captures user reviews and ratings for the recipes, providing insights into how users interact with and evaluate the recipes. The description of each column is shown below:
+
+| Column   | Description    |
+|-------------|-------------|
+| user_id | User ID |
+| recipe_id | Recipe ID | 
+| date | Date of interaction |
+| rating | Rating given | 
+| review | Review text |
+
+To explore **which types of recipes tend to have a lower number of steps**, we will focus specifically on the n_steps and tags columns in the dataset. To enhance the quality of our analysis, we will begin with data cleaning. This involves merging the two datasets into a single dataset, adjusting data types, and making any necessary modifications to the columns for consistency and clarity.
 
 ## Data Cleaning and Exploratory Data Analysis
 
