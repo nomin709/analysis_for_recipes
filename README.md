@@ -47,7 +47,7 @@ missingness of: n_steps
 column does depend on: minutes, n_ingredients, rating, contributor_id, submitted
 
 
-**Null Hypothesis:** The missingness of number of steps does not depend on ''.
+**Null Hypothesis:** The missingness of rating does not depend on n_steps.
 (Distribution of league when firstblood is missing is the same as the distribution of league when firstblood is not missing.)
 (if we fail to reject the null that the distribution of the column when 'child' is missing is the same as the distribution of the column when 'child' is not missing, then we can conclude 'child' is MCAR.)
 
