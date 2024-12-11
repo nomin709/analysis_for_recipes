@@ -59,8 +59,8 @@ To explore **which types of recipes tend to have a lower number of steps**, we w
 6. Convert the values in the 'recipe_id' column from float to integer.
 - We convert the values in the 'recipe_id' column for better representation. 
 
-7. Drop columns containing text data.
-- Since the analysis focuses on types of recipes and the number of steps, we drop columns containing text like 'steps,' 'description,' and 'review' to enhance the dataset's clarity.
+7. Drop 'step' column.
+- Since the analysis focuses on types of recipes and the number of steps, we drop column containing text like 'steps' to enhance the dataset's clarity.
 
 ##### Clean DataFrame
 
@@ -146,52 +146,42 @@ We performed a permutation test by shuffling n_steps 1,000 times and collecting 
   frameborder="0"
 ></iframe>
 
-***summary***
+The observed statistic for the given data is 0.067, represented by the red vertical line on the histogram plot. The p-value of this observed statistic is 0.0, which is less than the significance level of 0.05. Therefore, we reject the null hypothesis that the missingness of the rating does not depend on the number of steps.
 
-Present and interpret the results of your missingness permutation tests with respect to your data and question. Embed a plotly plot related to your missingness exploration; ideas include:
+***Rating Vs. Minutes***
 
-• The distribution of column Y when column X is missing and the distribution of column Y when column X is not missing, as was done in Lecture 8.
+**Null Hypothesis:** The missingness of rating does not depend on minutes.
 
-• The empirical distribution of the test statistic used in one of your permutation tests, along with the observed statistic.
+**Alternative Hypothesis:** The missingness of rating does depend on minutes.
 
-The absolute difference of mean in the '' of the distribution of the group with missing number of steps and the distribution of the group without missing number of steps.
-(diif in means, tvd, ks)
-Strategy: Always plot the two distributions you are comparing.
-- If the distributions have similar shapes but are centered in different places, use the difference in means (or absolute difference in means).
-- If your alternative hypothesis involves a "direction" (i.e. smoking weights were are on average than non-smoking weights), use the difference in means.
-- If the distributions have different shapes but roughly the same center, and your alternative hypothesis is simply that the two distributions are different, use the K-S statistic.
-
-missingness of: n_steps
-
-column does depend on: minutes, n_ingredients, rating, contributor_id, submitted
-
-
-**Null Hypothesis:** The missingness of rating does not depend on n_steps.
-(Distribution of league when firstblood is missing is the same as the distribution of league when firstblood is not missing.)
-(if we fail to reject the null that the distribution of the column when 'child' is missing is the same as the distribution of the column when 'child' is not missing, then we can conclude 'child' is MCAR.)
-
-**Alternative Hypothesis:** The missingness of number of steps does depend on ''.
-
-**Test Statistics:** The absolute difference of mean in the '' of the distribution of the group with missing number of steps and the distribution of the group without missing number of steps.
-(diif in means, tvd, ks)
-Strategy: Always plot the two distributions you are comparing.
-- If the distributions have similar shapes but are centered in different places, use the difference in means (or absolute difference in means).
-- If your alternative hypothesis involves a "direction" (i.e. smoking weights were are on average than non-smoking weights), use the difference in means.
-- If the distributions have different shapes but roughly the same center, and your alternative hypothesis is simply that the two distributions are different, use the K-S statistic.
+**Test Statistics:** We use the absolute difference of means as the test statistic to evaluate how the observed value compares to the empirical distribution generated under the null hypothesis.
 
 **Significance Level:** 0.05
 
-missingness of: n_steps
+<iframe
+  src="assets/mcar_dist.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
-column does not depend on: id, name, nutrition, user_id
+We observe that there are outliers in the "minutes" column, with some recipes taking over 1 million minutes to prepare. To improve the visualization and better understand the distribution between ratings that are missing and those that are not, we remove potential outliers by eliminating recipes with more than 4000 minutes of preparation time. This allows for a clearer distribution and better visualization of the data.
 
-**Null Hypothesis:** The missingness of number of steps does not depend on ''.
+<iframe
+  src="assets/mcar_dist_2.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
-**Alternative Hypothesis:** The missingness of number of steps does depend on ''.
+<iframe
+  src="assets/mcar_emp.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
-**Test Statistics:** The absolute difference of mean in the '' of the distribution of the group with missing number of steps and the distribution of the group without missing number of steps.
-
-**Significance Level:** 0.05
+We performed a permutation test on the dataset and collected the sample statistics. The observed test statistic is 51.45, represented by the red line in the empirical distribution. Some sample statistics exceed the observed value. The p-value of 0.105 is greater than the significance level of 0.05. Therefore, we fail to reject the null hypothesis that the rating does not depend on minutes.
 
 ## Hypothesis Testing
 
