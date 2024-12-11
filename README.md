@@ -252,7 +252,7 @@ Train RMSE: 5.51
 
 Test RMSE: 5.52
 
-The close values of train and test RMSE suggest that there is no overfitting. However, the maximum n_steps in the dataset is 100, and an RMSE of 5.52 indicates that, on average, the model's predictions are off by about 5.52 steps. Given that the mean number of steps (`n_steps`) is 10, this error seems significant.
+The close values of train and test RMSE suggest that there is no overfitting. However, the maximum n_steps in the dataset is 100, and an RMSE of 5.52 indicates that, on average, the model's predictions are off by about 5.52 steps. Given that the mean number of steps (`n_steps`) is 10, this error seems significant. Less RMSE is good as it implies a small error, however the test RMSE for our baseline model seems relatively high.
 
 Only using `minutes` and `n_ingredients` may not provide enough information for the model to accurately predict the number of steps, leading to suboptimal performance. The relationship between the number of steps and the provided features might be influenced by other factors that are not captured by these two variables alone, such as recipe complexity or specific ingredient types. The chosen max_depth of 5 might be limiting the model's ability to fully capture the intricacies of the data.
 
@@ -268,31 +268,41 @@ On top of `n_ingredients` and `minutes` that we used for baseline model, we adde
 
 `n_ingredients`
 
-As mentioned, we believe that it may impact the number of steps (`n_steps`), as more ingredients may require more steps to prepare and combine.
-
-We left rest of the numerical columns (`n_ingredients` and `rating_avg`) as is.
+As mentioned, we believe that number of ingredients may impact the number of steps (`n_steps`), as more ingredients may require more steps to prepare and combine. We also noted that there is a slight increasing pattern between `n_steps` and `n_ingredients` from the scatterplot we plotted. Although, the pattern doesn't seem to be signifanct to infer a clear relationship between them, this trend might be useful in helping the model predict the number of steps. This column is numerical so we left it as is in our final model.
 
 `minutes`
 
-We observed that the distribution of `minutes` is highly right skewed so we log transformed it to normalize.
+This column represents the preparation time in minutes. We suspect there might be a pattern between `n_steps` and `minutes` because we believe that with more preparation or cooking time, it is highly likely that number of steps would be high, because more time means more things to do, most of the times although there might exceptions. We observed that the distribution of `minutes` is highly right skewed so we log transformed it to normalize.
 
 `tags`
 
-To improve the model, we look into `tags` and take specific tags as indicators to predict the number of steps. We chose 9 relevant tags that we deemed important and significant in recipes: breakfast, lunch, dinner, snacks, desserts, beverages, appetizers, vegetarian, side-dishes. Then we manually one hot encoded each recipe using these tags, applying 1 if a recipe has the tag and 0 if not, for each of these selected tags.
+To improve the model, we look into `tags` and take specific tags as indicators to predict the number of steps. Because there are 549 unque tags, we chose 9 relevant tags that we deemed important and significant in recipes to reduce complexity. The selected tags are:
+breakfast, lunch, dinner, snacks, desserts, beverages, appetizers, vegetarian, side-dishes. Then we manually one hot encoded each recipe using these tags, applying 1 if a recipe has the tag and 0 if not, for each of these selected tags.
 
 `rating_avg`
 
+There wasn't a clear pattern between `n_steps` and `rating_avg` which may be due to its large variability in the data but also np correlation between the variables. However, we believe that the average rating of a recipe may play a role in predicting number of steps because somee recipes with less steps may tend to have higher rating for its simplicity and efficiency in cooking. This column is continious numerical, as it takes the average rating of recipes, so we left it as is in our final model.
 
-I used GridSearchCV to find the best hyperparameters for the RandomForestRegressor.
-The best hyperparameters are:
+After preprocessing the columns, I used GridSearchCV to find the best hyperparameters for the RandomForestRegressor.
+
+We tested different values in three hyperparameters and the value as follows:
+
+- `max_depth`: [5, 10, 20, 30],
+- `n_estimators`: [50, 100, 150],
+- `min_samples_split`: [2, 3, 4, 5]
+
+GridSearchCV results show that the best hyperparameters are:
 - max_depth: 30
 - n_estimators: 150
 - min_samples_split: 3
 
+We evaluated the final model performance using the same training and testing sets. The results are as follows:
+
 Train RMSE (Best Model): 3.32
+
 Test RMSE (Best Model): 3.93
 
-The final model performed better than the baseline model, as indicated by the increase in RMSE score for the final model compared to our initial baseline model.
+The final model performed better than the baseline model, as indicated by the decrease in RMSE score for the final model compared to our initial baseline model. The test RMSE decreased from 5.52 to 3.93, which is a good improvement.
 
 ## Fairness Analysis
 
