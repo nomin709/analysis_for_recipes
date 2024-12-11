@@ -280,11 +280,13 @@ We included tags to capture additional dimensions of the recipes. Given the larg
 
 Though there wasn't a clear pattern between rating_avg and n_steps due to variability, we believe the average rating may influence the number of steps. Recipes with fewer steps might tend to have higher ratings for their simplicity and efficiency. This feature is a continuous numerical value and was included as-is.
 
-After preprocessing, we used GridSearchCV to find the best hyperparameters for the RandomForestRegressor. We tested the following ranges:
+After preprocessing, we used GridSearchCV to find the best hyperparameters for the RandomForestRegressor. We tested the hyperparameters:
 
-- `max_depth`: [5, 10, 20, 30],
-- `n_estimators`: [50, 100, 150],
-- `min_samples_split`: [2, 3, 4, 5]
+**max_depth**: By tuning max_depth, we aim to find an optimal depth that captures the underlying patterns in the data without overfitting becasue shallow trees may lead to underfitting (high bias), while deep trees can lead to overfitting (high variance). We tested depths from 5 to 30.
+
+**n_estimators**: Increasing the number of trees generally improves model performance by reducing variance and avoiding overfitting. However, more trees also increase computational cost and training time. By tuning n_estimators, we aim to find a balance between model performance and computational efficiency. We tried 50 to 150 trees. 
+
+**min_samples_split**: By tuning min_samples_split, we aim to achieve a balance that prevents overfitting while capturing important patterns, as smaller values can lead to overfitting, while larger values can result in underfitting. We tested values from 2 to 5.
 
 The best hyperparameters identified were:
 - max_depth: 30
