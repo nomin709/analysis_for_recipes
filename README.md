@@ -185,20 +185,36 @@ We performed a permutation test on the dataset and collected the sample statisti
 
 ## Hypothesis Testing
 
-Clearly state your null and alternative hypotheses, your choice of test statistic and significance level, the resulting 
-p-value, and your conclusion. Justify why these choices are good choices for answering the question you are trying to answer.
+We are interested in investigating whether certain types of recipes, specifically those among the top 10 recipes with the fewest steps to complete, share the same average number of steps. To explore this, we use breakfast and lunch as examples and conduct a hypothesis test to determine if the average number of steps for breakfast recipes is the same as that for lunch recipes.
 
-Optional: Embed a visualization related to your hypothesis test in your website.
+**Null Hypothesis:** The average number of steps for breakfast recipes is equal to the average number of steps for lunch recipes. 
 
-Tip: When making writing your conclusions to the statistical tests in this project, never use language that implies an absolute conclusion; since we are performing statistical tests and not randomized controlled trials, we cannot prove that either hypothesis is 100% true or false.
+**Alternative Hypothesis:**  The average number of steps for breakfast recipes is different than the average number of steps for lunch recipes. 
 
-**Null Hypothesis:** The average number of steps for breakfast recipes is equal to the average number of steps for lunch recipes
-
-**Alternative Hypothesis:** The average number of steps for breakfast recipes is different than the average number of steps for lunch recipes
-
-**Test Statistics:** Permutation testing using the absolute difference between the means of breakfast recipes and lunch recipes
+**Test Statistics:** We plan to use permutation testing with the absolute difference between the means of breakfast recipes and lunch recipes as the test statistic.
 
 **Significance Level:** 0.05
+
+- Distribution of Numer of Steps for Breakfast and Lunch Recipes
+
+<iframe
+  src="assets/hypo.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+We conducted a permutation test by randomly shuffling the tags for "breakfast" and "lunch" and reassigning them to a new column called 'breakfast_lunch'. This process was repeated 1,000 times. For each iteration, we calculated the absolute difference in the mean number of steps between the shuffled groups, resulting in a distribution of 1,000 simulated statistics.
+
+<iframe
+  src="assets/emp_hypo.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The observed absolute difference in means from the dataset is 0.38, represented by a red line on the empirical histogram. The line is positioned far to the right of the simulated distribution, indicating a significant deviation. The p-value of the observed statistic is 0.0, suggesting it is highly unlikely that the average number of steps for breakfast recipes is the same as for lunch recipes. Therefore, we reject the null hypothesis that the average number of steps for breakfast is equal to the average number of steps for lunch. 
+It is important to note that the hypothesis test is based solely on the provided dataset and does not definitively prove that the average number of steps for breakfast is always different from that for lunch. The observed difference in average steps could be influenced by the general perception that breakfast is often treated as a simpler meal compared to lunch, which might explain the disparity in the average number of steps. 
 
 ## Framing a Prediction Problem
 
