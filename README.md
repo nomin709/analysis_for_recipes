@@ -274,7 +274,7 @@ This feature also remained from the baseline model. Preparation time (`minutes`)
 
 `tags`
 
-We included tags to capture additional dimensions of the recipes. Given the large number of unique tags (549), we selected 9 relevant tags: breakfast, lunch, dinner, snacks, desserts, beverages, appetizers, vegetarian, and side-dishes. These tags provide context about the type and complexity of the recipes. It is reasonable that certain types of recipes has less steps such that appetizers or bevarages are likely to have less steps compared to other recipe types. This notion was oobserved in our Hypothesis Testing section where we determined that the average number of steps for breakfast and lunch is different. We manually one-hot encoded these tags to include them in the model, applying 1 if a recipe has the tag and 0 if not.
+We included tags to capture additional dimensions of the recipes. Given the large number of unique tags (549), we selected 9 relevant tags: breakfast, lunch, dinner, snacks, desserts, beverages, appetizers, vegetarian, and side-dishes. These tags provide context about the type and complexity of the recipes. It is reasonable that certain types of recipes has less steps such that appetizers or bevarages are likely to have less steps compared to other recipe types. This notion was observed in our Hypothesis Testing section where we determined that the average number of steps for breakfast and lunch is different. We manually one-hot encoded these tags to include them in the model, applying 1 if a recipe has the tag and 0 if not.
 
 `rating_avg`
 
