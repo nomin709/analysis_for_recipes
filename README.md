@@ -79,7 +79,7 @@ We examined the distribution of n_steps and found no missing values in the colum
 
 #### Bivariate Analysis
 
-We examined the distribution of `n_ingredients` and found no missing values in the column. Here, we created a scatterplot to examine the relationship between number of ingredients (`n_ingredients`) and number of steps (`n_steps`). There appears to be a slight increasing pattern, although not significant enough to infer any relationship, as the points seem to be clustered in one are. The plot shows that the number of ingredients mostly ranges from 0 to 30, with the majority falling within 40 steps. 
+We examined the distribution of `n_ingredients` and found no missing values in the column. Here, we created a scatterplot to examine the relationship between number of ingredients (`n_ingredients`) and number of steps (`n_steps`). There appears to be a slight increasing pattern, although not significant enough to infer any relationship, as the points seem to be clustered in one area. The plot shows that the number of ingredients mostly ranges from 0 to 30, with the majority falling within 40 steps. 
 
 <iframe
   src="assets/bivariate.html"
