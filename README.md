@@ -236,24 +236,52 @@ This information allows us to predict the number of steps required for recipes b
 
 ## Baseline Model
 
-For our baseline model, we are using a random forest regressor because it seems that predictor variables and explanotory variables have no clear linear relationship thus random forest regressor may be better at handling complex interactions and non-linear patterns. We are predicting number of steps (`n_steps`) based on the features: preparation time (`minutes`) and number of ingredients (`n_ingredients`).
+For our baseline model, we chose a Random Forest Regressor due to the lack of a clear linear relationship between the predictor variables and the target variable. The Random Forest Regressor is well-suited to handle complex interactions and non-linear patterns. 
 
-`n_steps` and `n_ingredients` are variables containing quantitative numerical values. Therefore, we leave them as-is and build random forest regressor using these features with a `max_depth` of 5. 
+We are predicting the number of steps (`n_steps`) based on the following features: 
 
-To evaluate our model performance, we split the data into training and test sets, and fit the model on the training dataset. We then evaluated model performance on train and test sets. This baseline model didn't perform well because 
+- preparation time (`minutes`): We believe it is likely to influence the number of steps (`n_steps`) in a recipe
 
-Train RMSE: 5.509
-Test RMSE: 5.521
+- number of ingredients (`n_ingredients`): It may impact the number of steps (`n_steps`), as more ingredients may require more steps to prepare and combine.
+
+Both `minutes` and `n_ingredients` are quantitative numerical values, so we included them as-is in our model. We built the Random Forest Regressor with a max_depth of 5.
+
+To evaluate our model performance, we split the data into training and test sets. We fit the model on the training dataset and then evaluated its performance on both the train and test sets. The results are as follows:
+
+Train RMSE: 5.51
+
+Test RMSE: 5.52
+
+The close values of train and test RMSE suggest that there is no overfitting. However, the maximum n_steps in the dataset is 100, and an RMSE of 5.52 indicates that, on average, the model's predictions are off by about 5.52 steps. Given that the mean number of steps (`n_steps`) is 10, this error seems significant.
+
+Only using `minutes` and `n_ingredients` may not provide enough information for the model to accurately predict the number of steps, leading to suboptimal performance. The relationship between the number of steps and the provided features might be influenced by other factors that are not captured by these two variables alone, such as recipe complexity or specific ingredient types. The chosen max_depth of 5 might be limiting the model's ability to fully capture the intricacies of the data.
+
+To improve the model's performance, we could consider incorporating additional relevant features, tuning the hyperparameters further, and transforming certain columns.
 
 ## Final Model
 
-State the features you added and why they are good for the data and prediction task. Note that you can’t simply state “these features improved my accuracy”, since you’d need to choose these features and fit a model before noticing that – instead, talk about why you believe these features improved your model’s performance from the perspective of the data generating process.
-
-Describe the modeling algorithm you chose, the hyperparameters that ended up performing the best, and the method you used to select hyperparameters and your overall model. Describe how your Final Model’s performance is an improvement over your Baseline Model’s performance.
+In this section, we will add more features and transform certain columns, as well as tune the hyperparameters further in Random Forest Regressor toimprove our model's performance.
 
 Our final model uses the following features: `n_ingredients`, `minutes`, `tags`, `rating_avg`.
 
-To improve the model, we would look into tags and take specific tags as indicators to predict the number of steps.
+On top of `n_ingredients` and `minutes` that we used for baseline model, we added two more features from the data, `tags` and `rating_avg`.
+
+`n_ingredients`
+
+As mentioned, we believe that it may impact the number of steps (`n_steps`), as more ingredients may require more steps to prepare and combine.
+
+We left rest of the numerical columns (`n_ingredients` and `rating_avg`) as is.
+
+`minutes`
+
+We observed that the distribution of `minutes` is highly right skewed so we log transformed it to normalize.
+
+`tags`
+
+To improve the model, we look into `tags` and take specific tags as indicators to predict the number of steps. We chose 9 relevant tags that we deemed important and significant in recipes: breakfast, lunch, dinner, snacks, desserts, beverages, appetizers, vegetarian, side-dishes. Then we manually one hot encoded each recipe using these tags, applying 1 if a recipe has the tag and 0 if not, for each of these selected tags.
+
+`rating_avg`
+
 
 I used GridSearchCV to find the best hyperparameters for the RandomForestRegressor.
 The best hyperparameters are:
@@ -261,24 +289,24 @@ The best hyperparameters are:
 - n_estimators: 150
 - min_samples_split: 3
 
-Train RMSE (Best Model): 3.2974
-Test RMSE (Best Model): 3.9237
+Train RMSE (Best Model): 3.32
+Test RMSE (Best Model): 3.93
 
-The final model performed better than the baseline model, as indicated by the increase in RMSE score for the final model comapred to our initial baseline model.
+The final model performed better than the baseline model, as indicated by the increase in RMSE score for the final model compared to our initial baseline model.
 
 ## Fairness Analysis
 
-For the fairness analysis, we will assess if our final model is fair among recipes with lower average ratings and high average ratings. We are trying to determine if our model perform worse for low rated recipes than it does for high rated recipes. To evaluate this, we performed a permutation test and examined the result of the difference in RMSE between the two groups. 
+We will perform a fairness analysis to determine if our final model is fair in predicting the number of steps (`n_steps`) for recipes with low average ratings compared to those with high average ratings. Specifically, we aim to assess whether the model performs worse for low-rated recipes than for high-rated recipes. For this analysis, we will conduct a permutation test and examine the difference in RMSE between the two groups.
 
-To run the permutation test, we created a new column `low_rating` that indicates whether a recipe is low rated or high rated. We categorized the recipes by their average rating with a threshold of 4 where recipes with average rating less than 4 is classified as low rated, and if the average rating is greater than or equal to 4, recipe is classified as high rated.
+**Null Hypothesis:** Our model is fair. Its RMSE for low-rated and high-rated recipes are roughly the same, with any differences being due to random chance.
 
-**Null Hypothesis:** Our model is fair. Its RMSE for low rated recipes and high rated recipes are roughly the same, and any differences are due to random chance.
+**Alternative Hypothesis:** Our model is unfair. Its RMSE for low-rated recipes is lower than its RMSE for high-rated recipes.
 
-**Alternative Hypothesis:** Our model is unfair. Its RMSE for low rated recipes is lower than its RMSE for high rated recipes.
-
-**Test Statistics:**  Absolute difference in RMSE scores (low rated recipes - high rated recipes)
+**Test Statistics:**  Difference in RMSE between low-rated and high-rated recipes (low rated recipes - high rated recipes)
 
 **Significance Level:** 0.05
+
+To run the permutation test, we created a new column `low_rating` to classify recipes based on their average ratings. Recipes with an average rating of less than 4 were classified as low-rated, and those with an average rating of 4 or higher were classified as high-rated. We then shuffle the `low_rating` column for 1000 times to collect 1000 simulating differences in the two distributions as described in the test statistic.
 
 <iframe
   src='assets/fairness_emp.html'
@@ -287,4 +315,4 @@ To run the permutation test, we created a new column `low_rating` that indicates
   frameborder="0"
 ></iframe>
 
-After performing the permutation test with 1000 trails, we calculated a p-value of 0.379, which is greater than the significance level of 0.05. Therefore, we fail to reject the null hypothesis that our mode is fair, indicating that the RMSE for low rated recipes and high rated recipes are roughly the same, and any differences are due to random chance. This implies that our model predicts recipes from both groups with statistically similar errors which suggests our model is relatively fair and doesn't perform in favor of either low-rated recipes or high-rated recipes.
+After performing the permutation test, we got an observed test statistic of -0.41 and a p-value of 0.99, which is greater than the significance level of 0.05. Therefore, we fail reject the null hypothesis that our mode is fair, indicating that the model's RMSE for low-rated and high-rated recipes are roughly the same, with any differences being due to random chance. This finding suggests that our model is relatively fair and tends to perform similarly across the two groups. Hence, it doesn't show a significant bias in favor of either low-rated or high-rated recipes. We can consider the model's predictions to be equitable across these categories, based on the current analysis.
