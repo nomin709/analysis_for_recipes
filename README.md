@@ -218,23 +218,32 @@ It is important to note that the hypothesis test is based solely on the provided
 
 ## Framing a Prediction Problem
 
-Clearly state your prediction problem and type (classification or regression). If you are building a classifier, make sure to state whether you are performing binary classification or multiclass classification. Report the response variable (i.e. the variable you are predicting) and why you chose it, the metric you are using to evaluate your model and why you chose it over other suitable metrics (e.g. accuracy vs. F1-score).
+We aim to predict the number of steps (`n_steps`) in recipes, which is a regression problem. The target variable (`n_steps`) is quantitative and continuous, making regression the appropriate modeling approach.
 
-Note: Make sure to justify what information you would know at the “time of prediction” and to only train your model using those features. For instance, if we wanted to predict your final exam grade, we couldn’t use your Final Project grade, because the project is only due after the final exam! Feel free to ask questions if you’re not sure.
+The response variable we are predicting is the number of steps (`n_steps`) in a recipe. We chose this variable because it effectively reflects the numerical value of steps in a recipe within the dataset.
 
-Prediction Problem: Predicting number of steps, regression/classification problem
-Response variable: number of step (n_steps)
-Features: preparation time in min (minutes), number of ingredients (n_ingredients), tags, rating, contributor_id
+To evaluate our model, we will use Root Mean Squared Error (RMSE) instead of the Coefficient of Determination (R-squared). RMSE provides a more direct and interpretable measure of prediction accuracy by indicating the average error in the same units as the response variable. While R-squared measures how well the model explains the variance in the data, RMSE offers a clearer understanding of the actual prediction errors, making it a more practical metric for our model's performance evaluation. It helps us determine how many steps our prediction values deviate from the actual number, on average.
+
+In our previous analysis, we identified an increasing trend between the number of steps (`n_steps`) and the number of ingredients (n_ingredients), which could be useful in predicting the number of steps. Additionally, there is a significant difference between the average number of steps for breakfast and lunch recipes as determined in the Hypothesis Testing section, suggesting that tags could be valuable in our prediction model.
+
+At the time of the prediction, we know the following information:
+- Preparation time (`minutes`): Available before the recipe steps are known.
+- Number of ingredients (`n_ingredients`): Also known before determining the steps.
+- Tags (`tags`): These categorical labels can provide contextual information about the recipe type.
+- Average rating (`rating_avg`): Known from user feedback or historical data.
+
+This information allows us to predict the number of steps required for recipes based on features available at the prediction time, ensuring that our model is trained and evaluated in a way that is both realistic and practical.
 
 ## Baseline Model
 
-Describe your model and state the features in your model, including how many are quantitative, ordinal, and nominal, and how you performed any necessary encodings. Report the performance of your model and whether or not you believe your current model is “good” and why.
+For our baseline model, we are using a random forest regressor because it seems that predictor variables and explanotory variables have no clear linear relationship thus random forest regressor may be better at handling complex interactions and non-linear patterns. We are predicting number of steps (`n_steps`) based on the features: preparation time (`minutes`) and number of ingredients (`n_ingredients`).
 
-Tip: Make sure to hit all of the points above: many projects in the past have lost points for not doing so.
+`n_steps` and `n_ingredients` are variables containing quantitative numerical values. Therefore, we leave them as-is and build random forest regressor using these features with a `max_depth` of 5. 
 
-Predicting number of steps based on minutes (numerical) and number of ingredient (numerical).
-- all steps (feature transforms and model training) in a single sklearn Pipeline
-- take care of categorical columns using appropriate encoding
+To evaluate our model performance, we split the data into training and test sets, and fit the model on the training dataset. We then evaluated model performance on train and test sets. This baseline model didn't perform well because 
+
+Train RMSE: 5.509
+Test RMSE: 5.521
 
 ## Final Model
 
@@ -242,25 +251,40 @@ State the features you added and why they are good for the data and prediction t
 
 Describe the modeling algorithm you chose, the hyperparameters that ended up performing the best, and the method you used to select hyperparameters and your overall model. Describe how your Final Model’s performance is an improvement over your Baseline Model’s performance.
 
-Optional: Include a visualization that describes your model’s performance, e.g. a confusion matrix, if applicable.
+Our final model uses the following features: `n_ingredients`, `minutes`, `tags`, `rating_avg`.
 
 To improve the model, we would look into tags and take specific tags as indicators to predict the number of steps.
 
+I used GridSearchCV to find the best hyperparameters for the RandomForestRegressor.
+The best hyperparameters are:
+- max_depth: 30
+- n_estimators: 150
+- min_samples_split: 3
+
+Train RMSE (Best Model): 3.2974
+Test RMSE (Best Model): 3.9237
+
+The final model performed better than the baseline model, as indicated by the increase in RMSE score for the final model comapred to our initial baseline model.
+
 ## Fairness Analysis
 
-Clearly state your choice of Group X and Group Y, your evaluation metric, your null and alternative hypotheses, your choice of test statistic and significance level, the resulting 
-p-value, and your conclusion.
+For the fairness analysis, we will assess if our final model is fair among recipes with lower average ratings and high average ratings. We are trying to determine if our model perform worse for low rated recipes than it does for high rated recipes. To evaluate this, we performed a permutation test and examined the result of the difference in RMSE between the two groups. 
 
-Optional: Embed a visualization related to your permutation test in your website.
+To run the permutation test, we created a new column `low_rating` that indicates whether a recipe is low rated or high rated. We categorized the recipes by their average rating with a threshold of 4 where recipes with average rating less than 4 is classified as low rated, and if the average rating is greater than or equal to 4, recipe is classified as high rated.
 
-Does my model perform worse for individuals in Group X than it does for individuals in Group Y?”, for an interesting choice of X and Y ?
+**Null Hypothesis:** Our model is fair. Its RMSE for low rated recipes and high rated recipes are roughly the same, and any differences are due to random chance.
 
-Permutation Test
+**Alternative Hypothesis:** Our model is unfair. Its RMSE for low rated recipes is lower than its RMSE for high rated recipes.
 
-**Null Hypothesis:** Our model is fair. Its precision for young people and old people are roughly the same, and any differences are due to random chance.
-
-**Alternative Hypothesis:** Our model is unfair. Its precision for young people is lower than its precision for old people.
-
-**Test Statistics:** 
+**Test Statistics:**  Absolute difference in RMSE scores (low rated recipes - high rated recipes)
 
 **Significance Level:** 0.05
+
+<iframe
+  src='assets/fairness_emp.html'
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+After performing the permutation test with 1000 trails, we calculated a p-value of 0.379, which is greater than the significance level of 0.05. Therefore, we fail to reject the null hypothesis that our mode is fair, indicating that the RMSE for low rated recipes and high rated recipes are roughly the same, and any differences are due to random chance. This implies that our model predicts recipes from both groups with statistically similar errors which suggests our model is relatively fair and doesn't perform in favor of either low-rated recipes or high-rated recipes.
