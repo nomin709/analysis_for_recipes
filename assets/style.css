@@ -1,0 +1,99 @@
+/* Container layout for side-by-side sticky view */
+.page-container {
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  align-items: flex-start; /* Required for sticky sidebar */
+}
+
+/* Floating Sticky Sidebar Table of Contents */
+.sidebar-toc {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 1.5rem;
+  width: 260px;
+  min-width: 220px;
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  border-right: 1px solid #e2e8f0;
+  padding-right: 1.25rem;
+}
+
+.sidebar-toc h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.sidebar-toc ul {
+  list-style-type: none;
+  padding-left: 0.75rem;
+  margin: 0.25rem 0;
+}
+
+.sidebar-toc li {
+  margin-bottom: 0.4rem;
+  line-height: 1.35;
+}
+
+.sidebar-toc a {
+  text-decoration: none;
+  color: #4a5568;
+  font-size: 0.875rem;
+  transition: color 0.15s ease-in-out;
+}
+
+.sidebar-toc a:hover {
+  color: #2b6cb0;
+  text-decoration: underline;
+}
+
+/* Main Content Area */
+.main-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.main-body iframe {
+  max-width: 100%;
+}
+
+/* Table styling adjustments */
+.main-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.main-body th,
+.main-body td {
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.main-body th {
+  background-color: #f7fafc;
+}
+
+/* Responsive Stacking for Mobile and Tablets */
+@media (max-width: 850px) {
+  .page-container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .sidebar-toc {
+    position: static;
+    width: 100%;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+}
