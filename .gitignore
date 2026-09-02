@@ -9,6 +9,7 @@ _site/
 vendor/
 vendor/bundle/
 *.gem
+Gemfile.lock
 
 # Environment & OS files
 .DS_Store
