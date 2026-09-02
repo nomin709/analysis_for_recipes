@@ -1,0 +1,164 @@
+---
+---
+
+@import "jekyll-theme-slate";
+
+/* Expand the width limit of the header container */
+#header_wrap .inner {
+  max-width: 900px !important;  /* Expands horizontal room so long titles don't wrap prematurely */
+  width: 95% !important;
+  margin: 0 auto;
+  padding: 70px 20px 55px 20px !important; /* Slightly reduces top/bottom height */
+}
+
+#project_title {
+  text-align: center !important;
+}
+
+/* Subtitle / tagline adjustments (description) */
+#project_tagline {
+  font-size: 17px !important;     /* Slate's default is 18px */
+  margin-top: 12px !important;
+  color: #d9d8d8 !important;
+  text-align: center !important;
+}
+
+#header_wrap .inner {
+  position: relative; /* Allows absolute children to anchor to the inner container */
+}
+
+#forkme_banner {
+  top: auto !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Ensure Slate's native container stays untouched at its original width */
+#main_content_wrap .inner {
+  position: relative !important;
+  max-width: 700px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+/* Side-by-side layout: centers the main article while sidebar sits to the side */
+.page-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2.5rem;
+  width: 100%;
+  transform: translateX(-130px);
+}
+
+/* Sidebar floating in the gutter outside the main body */
+.sidebar-toc {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 4rem !important;        /* Distance from the top of the viewport once scrolling */
+  margin-top: 1.5rem !important; /* Pushes its resting position down when the page first loads */
+  width: 240px;
+  min-width: 200px;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  border-right: 1px solid #30353b;
+  padding-right: 1.5rem;
+  flex-shrink: 0;
+}
+
+.sidebar-toc h3 {
+  margin-top: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.sidebar-toc ul {
+  list-style-type: none;
+  padding-left: 1.5rem;
+  margin: 0.25rem 0;
+}
+
+.sidebar-toc li {
+  margin-bottom: 0.35rem;
+  line-height: 1.35;
+}
+
+.sidebar-toc a {
+  text-decoration: none;
+  color: black;
+  font-size: 0.825rem;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.sidebar-toc a:hover {
+  color: #58a6ff;
+  text-decoration: underline;
+}
+
+/* Highlighted / active section */
+.sidebar-toc a.active {
+  color: #0969da !important;        /* Slate blue accent (or #58a6ff if on dark) */
+  font-weight: 700 !important;
+  transform: translateX(4px);       /* Subtle indent shift */
+}
+
+/* Add an active left border indicator */
+.sidebar-toc li.active-item {
+  border-left: 2px solid #0969da;
+  padding-left: 6px;
+  margin-left: -8px;
+}
+
+/* Main body locked to Slate's original reading column width */
+.main-body {
+  width: 700px;
+  max-width: 700px;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.main-body iframe,
+.main-body img,
+.main-body table {
+  max-width: 100%;
+}
+
+/* Mobile & narrow tablet: stack TOC cleanly on top */
+@media (max-width: 1024px) {
+  .page-container {
+    flex-direction: column;
+    align-items: center;
+    transform: none;
+  }
+
+  .sidebar-toc {
+    position: static;
+    width: 100%;
+    max-width: 700px;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid #30353b;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .main-body {
+    width: 100%;
+  }
+}
+
+.main-body iframe {
+  border: none;
+  width: 100%;
+  height: 420px;
+  border: none; 
+  display: block; 
+  margin: 0 auto;
+  overflow: auto;
+}

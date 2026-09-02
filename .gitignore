@@ -1,2 +1,21 @@
-.Rhistory
+# Jekyll compiled output and cache
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Bundler and local Ruby gems
+.bundle/
+vendor/
+vendor/bundle/
+*.gem
+
+# Environment & OS files
 .DS_Store
+.Rhistory
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

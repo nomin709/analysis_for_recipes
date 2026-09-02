@@ -1,23 +1,26 @@
 ---
 layout: default
-title: "Exploring Recipe Types with Fewer Steps"
 ---
 
-<link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 
-<div class="page-container">
+<div class="page-container" markdown="1">
 
-  <aside class="sidebar-toc">
-    <h3>Table of Contents</h3>
-    * Table of Contents
-    {:toc}
+  <aside class="sidebar-toc" markdown="1">
+
+  <h3>Table of Contents</h3>
+
+  * Table of Contents
+  {:toc}
+
   </aside>
 
-  <main class="main-body">
+  <main class="main-body" markdown="1">
 
-# Exploring Recipe Types with Fewer Steps: An Analysis of Simplicity and Efficiency in Cooking
+<!-- # Exploring Recipe Types with Fewer Steps: An Analysis of Simplicity and Efficiency in Cooking -->
+{: .no_toc}
 
-by Nomin Batjargal and An-Chi Lu
+<!-- by Nomin Batjargal and An-Chi Lu -->
 
 ## Introduction
 
@@ -81,29 +84,19 @@ To explore **which types of recipes tend to have a lower number of steps**, we w
 
 ### Clean DataFrame
 
-<iframe src="assets/dataframe.html" style="width: 100%; height: 400px; border: none; overflow: auto;"></iframe>
+<iframe src="assets/dataframe.html"></iframe>
 
 ### Univariate Analysis
 
 We examined the distribution of n_steps and found no missing values in the column. The distribution appears to be right-skewed, with most recipes requiring fewer than 20 steps. Upon analyzing the statistics, we found that the mean number of steps is approximately 10, the median is 9, the maximum is 100, and the minimum is 1. 
 
-<iframe
-  src="assets/univariate.html"
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>
+<iframe src="assets/univariate.html"></iframe>
 
 ### Bivariate Analysis
 
 We examined the distribution of `n_ingredients` and found no missing values in the column. Here, we created a scatterplot to examine the relationship between number of ingredients (`n_ingredients`) and number of steps (`n_steps`). There appears to be a slight increasing pattern, although not significant enough to infer any relationship, as the points seem to be clustered in one area. The plot shows that the number of ingredients mostly ranges from 0 to 30, with the majority falling within 40 steps. 
 
-<iframe
-  src="assets/bivariate.html"
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>
+<iframe src="assets/bivariate.html"></iframe>
 
 ### Interesting Aggregates
 
@@ -145,23 +138,13 @@ We aim to investigate whether the missingness of the rating column depends on n_
 
 **Significance Level:** 0.05
 
-<iframe
-  src="assets/mar_dist.html"
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>
+<iframe src="assets/mar_dist.html"></iframe>
 
 We can see that the distributions center roughly the same place but have different shapes.
 
 We performed a permutation test by shuffling n_steps 1,000 times and collecting the K-S statistic for each of the 1,000 simulated samples to obtain the distribution of simulated statistics.
 
-<iframe
-  src="assets/mar_emp.html"
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>
+<iframe src="assets/mar_emp.html"></iframe>
 
 The observed statistic for the given data is 0.067, represented by the red vertical line on the histogram plot. The p-value of this observed statistic is 0.0, which is less than the significance level of 0.05. Therefore, we reject the null hypothesis that the missingness of the rating does not depend on the number of steps.
 
@@ -175,30 +158,17 @@ The observed statistic for the given data is 0.067, represented by the red verti
 
 **Significance Level:** 0.05
 
-<iframe
-  src="assets/mcar_dist.html"
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>
+<iframe src="assets/mcar_dist.html"></iframe>
 
 We observe that there are outliers in the "minutes" column, with some recipes taking over 1 million minutes to prepare. To improve the visualization and better understand the distribution between ratings that are missing and those that are not, we remove potential outliers by eliminating recipes with more than 4000 minutes of preparation time. This allows for a clearer distribution and better visualization of the data.
 
-<iframe
-  src="assets/mcar_dist_2.html"
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>
+<iframe src="assets/mcar_dist_2.html"></iframe>
 
-<iframe
-  src="assets/mcar_emp.html"
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>
+We performed a permutation test on the dataset and collected the sample statistics.
 
-We performed a permutation test on the dataset and collected the sample statistics. The observed test statistic is 51.45, represented by the red line in the empirical distribution. Some sample statistics exceed the observed value. The p-value of 0.105 is greater than the significance level of 0.05. Therefore, we fail to reject the null hypothesis that the rating does not depend on minutes.
+<iframe src="assets/mcar_emp.html"></iframe>
+
+ The observed test statistic is 51.45, represented by the red line in the empirical distribution. Some sample statistics exceed the observed value. The p-value of 0.105 is greater than the significance level of 0.05. Therefore, we fail to reject the null hypothesis that the rating does not depend on minutes.
 
 ## Hypothesis Testing
 
@@ -214,21 +184,11 @@ We are interested in investigating whether certain types of recipes, specificall
 
 - Distribution of Number of Steps for Breakfast and Lunch Recipes
 
-<iframe
-  src="assets/hypo.html"
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>
+<iframe src="assets/hypo.html"></iframe>
 
 We conducted a permutation test by randomly shuffling the tags for "breakfast" and "lunch" and reassigning them to a new column called 'breakfast_lunch'. This process was repeated 1,000 times. For each iteration, we calculated the absolute difference in the mean number of steps between the shuffled groups, resulting in a distribution of 1,000 simulated statistics.
 
-<iframe
-  src="assets/emp_hypo.html"
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>
+<iframe src="assets/emp_hypo.html"></iframe>
 
 The observed absolute difference in means from the dataset is 0.38, represented by a red line on the empirical histogram. The line is positioned far to the right of the simulated distribution, indicating a significant deviation. The p-value of the observed statistic is 0.0, suggesting it is highly unlikely that the average number of steps for breakfast recipes is the same as for lunch recipes. Therefore, we reject the null hypothesis that the average number of steps for breakfast is equal to the average number of steps for lunch. 
 It is important to note that the hypothesis test is based solely on the provided dataset and does not definitively prove that the average number of steps for breakfast is always different from that for lunch. The observed difference in average steps could be influenced by the general perception that breakfast is often treated as a simpler meal compared to lunch, which might explain the disparity in the average number of steps. 
@@ -316,14 +276,11 @@ We will perform a fairness analysis to determine if our final model is fair in p
 
 To run the permutation test, we created a new column `low_rating` to classify recipes based on their average ratings. Recipes with an average rating of less than 4 were classified as low-rated, and those with an average rating of 4 or higher were classified as high-rated. We then shuffle the `low_rating` column for 1000 times to collect 1000 simulating differences in the two distributions as described in the test statistic.
 
-<iframe
-  src='assets/fairness_emp.html'
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>
+<iframe src='assets/fairness_emp.html'></iframe>
 
 After performing the permutation test, we got an observed test statistic of -0.41 and a p-value of 0.99, which is greater than the significance level of 0.05. Therefore, we fail to reject the null hypothesis that our model is fair, indicating that the model's RMSE for low-rated and high-rated recipes are roughly the same, with any differences being due to random chance. This finding suggests that our model is relatively fair and tends to perform similarly across the two groups. Hence, it doesn't show a significant bias in favor of either low-rated or high-rated recipes. We can consider the model's predictions to be equitable across these categories, based on the current analysis.
 
   </main>
 </div>
+
+<script src="{{ '/assets/js/script.js' | relative_url }}" defer></script>
