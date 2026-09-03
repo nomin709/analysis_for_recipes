@@ -133,15 +133,15 @@ We aim to investigate whether the missingness of the rating column depends on n_
 
 **Significance Level:** 0.05
 
-<iframe src="assets/mar_dist.html"></iframe>
+To test if missing ratings depend on recipe complexity, we compared step count distributions for recipes with and without ratings. Both curves follow nearly identical right-skewed shapes, peaking around 7 to 10 steps, that is, the distributions match closely in shape and spread.
 
-We can see that the distributions center roughly the same place but have different shapes.
+<iframe src="assets/mar_dist.html"></iframe>
 
 We performed a permutation test by shuffling n_steps 1,000 times and collecting the K-S statistic for each of the 1,000 simulated samples to obtain the distribution of simulated statistics.
 
 <iframe src="assets/mar_emp.html"></iframe>
 
-The observed statistic for the given data is 0.067, represented by the red vertical line on the histogram plot. The p-value of this observed statistic is 0.0, which is less than the significance level of 0.05. Therefore, we reject the null hypothesis that the missingness of the rating does not depend on the number of steps.
+The observed statistic for the given data is 0.067, represented by the red vertical line on the histogram plot. The p-value of this observed statistic is 0.0, which is less than the significance level of 0.05. Therefore, we reject the null hypothesis that the missingness of the rating does not depend on the number of steps. In other words, whether a recipe receives a rating is significantly associated with its number of steps.
 
 #### Rating Vs. Minutes
 
@@ -153,17 +153,19 @@ The observed statistic for the given data is 0.067, represented by the red verti
 
 **Significance Level:** 0.05
 
+We observe that there are outliers in the "minutes" column, with some recipes taking over 1 million minutes to prepare.
+
 <iframe src="assets/mcar_dist.html"></iframe>
 
-We observe that there are outliers in the "minutes" column, with some recipes taking over 1 million minutes to prepare. To improve the visualization and better understand the distribution between ratings that are missing and those that are not, we remove potential outliers by eliminating recipes with more than 4000 minutes of preparation time. This allows for a clearer distribution and better visualization of the data.
+To improve the visualization and better understand the distribution between ratings that are missing (true) and those that are not (false), we remove potential outliers by eliminating recipes with more than 4000 minutes of preparation time. This allows for a clearer distribution and better visualization of the data, as shown below.
 
 <iframe src="assets/mcar_dist_2.html"></iframe>
 
-We performed a permutation test on the dataset and collected the sample statistics.
+To test whether the difference in means between the two groups (recipes with missing vs without missing ratings) is statistically significant, we performed a permutation test on the dataset and collected the sample statistics.
 
 <iframe src="assets/mcar_emp.html"></iframe>
 
- The observed test statistic is 51.45, represented by the red line in the empirical distribution. Some sample statistics exceed the observed value. The p-value of 0.105 is greater than the significance level of 0.05. Therefore, we fail to reject the null hypothesis that the rating does not depend on minutes.
+Under random shuffling, typical absolute mean differences clustered between 0 and 25 minutes, while our actual observed difference was 51.45 minutes (marked by the red vertical line). Some sample statistics exceed the observed value. The p-value of 0.105 is greater than the significance level of 0.05. Therefore, we fail to reject the null hypothesis that the rating does not depend on minutes. In other words, there is not enough evidence to suggest that a recipe's cooking time affects whether it gets rated.
 
 ## Hypothesis Testing
 
@@ -173,11 +175,11 @@ We are interested in investigating whether certain types of recipes, specificall
 
 **Alternative Hypothesis:** The average number of steps for breakfast recipes is different than the average number of steps for lunch recipes. 
 
-**Test Statistics:** We plan to use permutation testing with the absolute difference between the means of breakfast recipes and lunch recipes as the test statistic.
+**Test Statistics:** We use permutation testing with the absolute difference in mean number of steps between breakfast and lunch recipes as the test statistic.
 
 **Significance Level:** 0.05
 
-- Distribution of Number of Steps for Breakfast and Lunch Recipes
+To examine if meal category influences recipe complexity, we compared the step count distributions of breakfast and lunch recipes. Both categories display unimodal, right-skewed distributions that peak between 7 and 9 steps, with most recipes requiring 5 to 15 steps. The substantial overlap in center and spread indicates that procedural complexity is similar across both meals; the higher frequency for lunch simply reflects a larger sample size in the dataset.
 
 <iframe src="assets/hypo.html"></iframe>
 
@@ -186,7 +188,7 @@ We conducted a permutation test by randomly shuffling the tags for "breakfast" a
 <iframe src="assets/emp_hypo.html"></iframe>
 
 The observed absolute difference in means from the dataset is 0.38, represented by a red line on the empirical histogram. The line is positioned far to the right of the simulated distribution, indicating a significant deviation. The p-value of the observed statistic is 0.0, suggesting it is highly unlikely that the average number of steps for breakfast recipes is the same as for lunch recipes. Therefore, we reject the null hypothesis that the average number of steps for breakfast is equal to the average number of steps for lunch. 
-It is important to note that the hypothesis test is based solely on the provided dataset and does not definitively prove that the average number of steps for breakfast is always different from that for lunch. The observed difference in average steps could be influenced by the general perception that breakfast is often treated as a simpler meal compared to lunch, which might explain the disparity in the average number of steps. 
+However, because the observed difference is only about $0.38$ steps, the practical difference in procedural complexity between the two meal types remains quite small. It is important to note that the hypothesis test is based solely on the provided dataset and does not definitively prove that the average number of steps for breakfast is always different from that for lunch. The observed difference in average steps could be influenced by the general perception that breakfast is often treated as a simpler meal compared to lunch, which might explain the disparity in the average number of steps. 
 
 ## Framing a Prediction Problem
 
