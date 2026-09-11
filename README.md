@@ -14,7 +14,7 @@ As life gets busy, home cooks and students alike often prioritize speed and mini
 
 ### Data
 
-The dataset used can be found [here](https://drive.google.com/drive/u/0/folders/1Tj34RInQA0rmarLuQO9hr-yqGhj-nkGX). It was originally scraped and used by the authors of [this](https://cseweb.ucsd.edu/~jmcauley/pdfs/emnlp19c.pdf) recommender systems paper. However, this provided dataset contains a subset of the raw data used in the original report, containing only the recipes and reviews posted since 2008. The full scraped raw data can be found [here](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions/data).
+The dataset used can be found [here](https://drive.google.com/drive/u/0/folders/1Tj34RInQA0rmarLuQO9hr-yqGhj-nkGX). It was originally scraped and used by the authors of [this](https://cseweb.ucsd.edu/~jmcauley/pdfs/emnlp19c.pdf) recommender systems paper. However, this provided dataset contains a subset of the raw data used in the original report, containing only the recipes and reviews posted since 2008. The full scraped raw data can be found [here](https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions/data) on Kaggle.
 
 ### Key Highlights
 - **Exploratory Data Analysis:** Univariate and bivariate distributions of cooking steps, preparation minutes, and user scores.
