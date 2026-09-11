@@ -4,13 +4,17 @@ by Nomin Batjargal and An-Chi Lu
 
 An exploratory data analysis investigating the relationship between recipe simplicity, step counts, preparation time, and user ratings. 
 
-🔗 **[View the Live Interactive Report](https://nomin709.github.io/analysis_for_recipes/)**
+**[View the Live Interactive Report](https://nomin709.github.io/analysis_for_recipes/)**
 
 ---
 
 ## Overview
 
 As life gets busy, home cooks and students alike often prioritize speed and minimal preparation over elaborate kitchen techniques. This project investigates whether fewer recipe steps correlate with higher ratings, lower prep times, or specific culinary categories.
+
+### Data
+
+The dataset used can be found [here](https://drive.google.com/drive/u/0/folders/1Tj34RInQA0rmarLuQO9hr-yqGhj-nkGX). It was originally scraped and used by the authors of [this](https://cseweb.ucsd.edu/~jmcauley/pdfs/emnlp19c.pdf) recommender systems paper.
 
 ### Key Highlights
 - **Exploratory Data Analysis:** Univariate and bivariate distributions of cooking steps, preparation minutes, and user scores.
